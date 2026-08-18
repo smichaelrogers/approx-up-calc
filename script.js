@@ -8,6 +8,7 @@ function init() {
     const t2Result = document.getElementById('t2-result');
     const totalTimeResult = document.getElementById('total-time-result');
     const energyResult = document.getElementById('energy-result');
+    const maxSpeedResult = document.getElementById('max-speed-result');
 
     const formatNumber = (num, unit) => {
         if (num >= 1e9) {
@@ -71,9 +72,11 @@ function init() {
 
         const totalTime = t1 + t2;
         const totalEnergy = p * totalTime;
+        const maxSpeed = v0 + (a * t1);
 
         t1Result.textContent = formatTime(t1);
         t2Result.textContent = formatTime(t2);
+        maxSpeedResult.textContent = formatNumber(maxSpeed, 'm/s');
         totalTimeResult.textContent = formatTime(totalTime);
         energyResult.textContent = formatNumber(totalEnergy, 'J');
         

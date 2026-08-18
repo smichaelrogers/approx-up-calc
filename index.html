@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="background-overlay"></div>
-    
+
     <main class="container">
         <header>
             <h1>Approximately Up Burn Calculator</h1>
@@ -43,10 +45,16 @@
 
         <div id="results-container" class="results-container hidden">
             <div id="error-message" class="error hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                <span id="error-text">Target is too close to stop in time at the current velocity and acceleration.</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span id="error-text">Target is too close to stop in time at the current velocity and
+                    acceleration.</span>
             </div>
-            
+
             <div id="success-results" class="success-results">
                 <div class="result-card">
                     <h3>Acceleration Phase</h3>
@@ -57,6 +65,11 @@
                     <h3>Deceleration Phase</h3>
                     <div class="value" id="t2-result">0.00 s</div>
                     <span class="label">Time to burn away to stop</span>
+                </div>
+                <div class="result-card">
+                    <h3>Max Velocity</h3>
+                    <div class="value" id="max-speed-result">0.00 m/s</div>
+                    <span class="label">Velocity before deceleration</span>
                 </div>
                 <div class="result-card highlight">
                     <h3>Total Duration</h3>
@@ -74,4 +87,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
