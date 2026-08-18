@@ -9,6 +9,52 @@ function init() {
     const totalTimeResult = document.getElementById('total-time-result');
     const energyResult = document.getElementById('energy-result');
     const maxSpeedResult = document.getElementById('max-speed-result');
+    const flipDistanceResult = document.getElementById('flip-distance-result');
+
+    const t1Card = t1Result.closest('.result-card');
+    const t2Card = t2Result.closest('.result-card');
+    t1Card.style.cursor = 'pointer';
+    t2Card.style.cursor = 'pointer';
+    t1Card.title = 'Click to start/pause countdown';
+    t2Card.title = 'Click to start/pause countdown';
+
+    let t1State = { interval: null, remaining: 0, lastTick: 0, running: false };
+    let t2State = { interval: null, remaining: 0, lastTick: 0, running: false };
+
+    const updateTimer = (state, element) => {
+        const now = Date.now();
+        const delta = (now - state.lastTick) / 1000;
+        state.lastTick = now;
+        state.remaining -= delta;
+        if (state.remaining <= 0) {
+            state.remaining = 0;
+            clearInterval(state.interval);
+            state.running = false;
+        }
+        element.textContent = formatTime(state.remaining);
+    };
+
+    t1Card.addEventListener('click', () => {
+        if (!t1State.running && t1State.remaining > 0) {
+            t1State.running = true;
+            t1State.lastTick = Date.now();
+            t1State.interval = setInterval(() => updateTimer(t1State, t1Result), 100);
+        } else if (t1State.running) {
+            t1State.running = false;
+            clearInterval(t1State.interval);
+        }
+    });
+
+    t2Card.addEventListener('click', () => {
+        if (!t2State.running && t2State.remaining > 0) {
+            t2State.running = true;
+            t2State.lastTick = Date.now();
+            t2State.interval = setInterval(() => updateTimer(t2State, t2Result), 100);
+        } else if (t2State.running) {
+            t2State.running = false;
+            clearInterval(t2State.interval);
+        }
+    });
 
     const formatNumber = (num, unit) => {
         if (num >= 1e9) {
@@ -73,10 +119,17 @@ function init() {
         const totalTime = t1 + t2;
         const totalEnergy = p * totalTime;
         const maxSpeed = v0 + (a * t1);
+        const flipDistance = (maxSpeed * maxSpeed) / (2 * a);
+
+        if (t1State.interval) clearInterval(t1State.interval);
+        if (t2State.interval) clearInterval(t2State.interval);
+        t1State = { interval: null, remaining: t1, lastTick: 0, running: false };
+        t2State = { interval: null, remaining: t2, lastTick: 0, running: false };
 
         t1Result.textContent = formatTime(t1);
         t2Result.textContent = formatTime(t2);
         maxSpeedResult.textContent = formatNumber(maxSpeed, 'm/s');
+        flipDistanceResult.textContent = formatNumber(flipDistance, 'm');
         totalTimeResult.textContent = formatTime(totalTime);
         energyResult.textContent = formatNumber(totalEnergy, 'J');
         
@@ -85,6 +138,7 @@ function init() {
             resultsContainer.style.transform = 'scale(1)';
         }, 150);
     });
+
 };
 
 document.addEventListener('DOMContentLoaded', init);
